@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+
+	<h:form>
+		<h:panelGrid columns="2">
+
+			
+			<p:outputLabel value="Cargado desde el back"/>
+			<p:selectManyCheckbox id="basic"
+				value="#{manageAnotationController.generalPojo.juegosSeleccionados}">
+				<f:selectItems value="${manageAnotationController.generalPojo.nombresJuegos}" />
+			</p:selectManyCheckbox>
+			
+             <p:commandButton value="Guardar" action="#{manageAnotationController.guardarInformacion()}" validateClient="true" 
+                           update="@form" process="@parent" />
+		</h:panelGrid>
+	</h:form>
+	
+
+
+	
+
+</h:body>
+</html>

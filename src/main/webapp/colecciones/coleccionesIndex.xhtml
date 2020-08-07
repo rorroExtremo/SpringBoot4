@@ -1,0 +1,97 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<h:outputText value="Usuarios iterados con jstl"/>
+	<c:forEach var="usuarioItr" items="${coleccionesController.generalPojo.usuarios}">
+		<br></br>
+		<h:outputText value="${usuarioItr}"></h:outputText>
+		
+	</c:forEach>
+	<br></br><br></br>
+	<h:form>
+		<h:panelGrid columns="2">
+			<p:outputLabel value="Items Duro"/>
+			<p:selectManyCheckbox id="juegos"
+				value="#{coleccionesController.generalPojo.consolasSeleccionadas}">
+				<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+				<f:selectItem itemLabel="PS4" itemValue="PS4" />
+				<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+			</p:selectManyCheckbox>
+			
+			<p:outputLabel value="Cargado desde el back"/>
+			<p:selectManyCheckbox id="basic"
+				value="#{coleccionesController.generalPojo.juegosSeleccionados}">
+				<f:selectItems value="${coleccionesController.generalPojo.nombresJuegos}" />
+			</p:selectManyCheckbox>
+			
+             <p:commandButton value="Guardar" action="#{coleccionesController.guardarInformacion()}" validateClient="true" 
+                           update="@form" process="@parent" />
+		</h:panelGrid>
+	</h:form>
+	
+		<br></br><br></br>
+	<h:form>
+		<h:panelGrid columns="2">
+			<p:outputLabel value="Many Menu"/>
+			<p:selectManyMenu id="basic"
+				value="#{coleccionesController.generalPojo.juegosSeleccionados}">
+				<f:selectItems value="${coleccionesController.generalPojo.nombresJuegos}" />
+			</p:selectManyMenu>
+				
+             <p:commandButton value="Guardar" actionListener="#{coleccionesController.guardarInformacion()}" 
+                           update="@form" process="@parent" />
+		</h:panelGrid>
+	</h:form>
+	
+		<br></br><br></br>
+	<h:form>
+		<h:panelGrid columns="2">
+			<p:outputLabel value="One Menu"/>
+
+			<p:selectOneMenu 
+				value="#{coleccionesController.generalPojo.cualquierString}" >
+				<f:selectItem  itemValue="No selecciono" itemLabel="--Seleccione--" noSelectionOption="true" />
+				<f:selectItems value="${coleccionesController.generalPojo.nombresJuegos}" />
+			</p:selectOneMenu>
+			
+             <p:commandButton value="Guardar" action="#{coleccionesController.guardarInformacion()}" 
+                           update="@form" process="@parent" />
+		</h:panelGrid>
+	</h:form>
+	
+			<br></br><br></br>
+			CAMBIO DE UN COMBO A OTRO
+	<h:form>
+		<h:panelGrid columns="2">
+			<p:outputLabel value="Compañias"/>
+
+			<p:selectOneMenu 
+				value="#{coleccionesController.generalPojo.companiaSeleccionada}" 
+				valueChangeListener="#{coleccionesController.filtrarJuegos}">
+				<f:selectItem  itemValue="No selecciono" itemLabel="--Seleccione--" noSelectionOption="true" />
+				<f:selectItems value="${coleccionesController.generalPojo.companiasJuegos}" />
+				<f:ajax event="change" execute="@form" render="juegosSeleccionados"/>
+			</p:selectOneMenu>
+			
+			<p:outputLabel value="One Menu"/>
+
+			<p:selectOneMenu 
+				value="#{coleccionesController.generalPojo.cualquierString}" id="juegosSeleccionados">
+				<f:selectItem  itemValue="No selecciono" itemLabel="--Seleccione--" noSelectionOption="true" />
+				<f:selectItems value="${coleccionesController.generalPojo.nombresJuegos}" />
+			</p:selectOneMenu>
+			
+             <p:commandButton value="Guardar" action="#{coleccionesController.guardarInformacion()}" 
+                           update="@form" process="@parent" />
+		</h:panelGrid>
+	</h:form>
+
+	
+
+</h:body>
+</html>

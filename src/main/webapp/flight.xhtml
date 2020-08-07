@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+
+    <h:form>
+
+        <p:panel>
+            <f:facet name="header">
+                New Flight
+                <p:commandButton action="#{flightController.refresh()}" 
+                                 icon="pi pi-refresh" update="@form" process="@this"/>
+            </f:facet>
+ 			<h:panelGrid columns="3">
+	 			<p:outputLabel value="Id"/>
+	                <p:inputText value="#{flightController.flight.id}"
+	                             required="true"
+	                             requiredMessage="No te hagas wey con el id"
+	                             id="identificador"/>
+	
+	                <p:message for="identificador" style="color:red;"></p:message>	
+
+                              			
+ 			    <p:outputLabel value="Airline"/>
+                <p:inputText value="#{flightController.flight.airline}"
+                             required="true" 
+                             requiredMessage="No te hagas wey con la aerolinea"                             
+                             id="airline"/>
+             
+                  <p:message for="airline" style="color:red;"></p:message>	
+                             
+
+ 			    <p:outputLabel value="ScheduledDateTime"/>
+                <p:datePicker value="#{flightController.flight.scheduledDateTime}"
+                              showTime="true"/>
+
+                <p:outputLabel/>
+                <p:commandButton value="Save2222" action="#{flightController.save()}" validateClient="true" 
+                                 update="@form" process="@parent" />
+
+            </h:panelGrid>
+        </p:panel>
+
+        <br/>
+	                <p:commandButton value="ErrorOtraPantalla" action="#{flightController.redirectToErrorPage()}"
+	                update="@form" process="@this"/>
+    </h:form>
+	<p:panel id="basic" header="Navegacion Show Info" footer="Probando el footer" style="margin-bottom:20px">
+					
+					<p:growl id="growl" life="2000" />
+					<h:panelGrid columns="3">
+			                <p:commandButton value="ErrorOtraPantalla" action="#{flightController.redirectToErrorPage()}"
+			                process="@this"/>
+			                
+			                <p:commandButton value="Error Aqui mismo" action="#{flightController.sendError()}"
+			                process="@this" update="growl" />
+	
+							<h:form>
+								<p:outputLabel value="tipoLinea" />
+								<p:inputText value="#{flightController.tipoLinea}" required="true" />
+								<p:commandButton value="Cargar Datos"
+									action="#{flightController.getData(1)}" process="@parent"
+									update="vuelosId" />
+							</h:form>
+				</h:panelGrid>
+	                
+	                <p:dataTable var="flightIter" value="#{flightController.flights}"
+                         rows="10" paginator="true" id="vuelosId">
+
+		                <p:column headerText="Id" width="10%">
+		                    <h:outputText value="#{flightIter.id}"/>
+		                </p:column>
+		
+		                <p:column headerText="Airline">
+		                    <h:outputText value="#{flightIter.airline}"/>
+		                </p:column>
+		                
+		                <p:column headerText="ScheduledDateTime">
+		                    <h:outputText value="#{flightIter.scheduledDateTime}">
+		                        <f:convertDateTime pattern="yyyy-MM-dd hh:mm:ss"/>
+		                    </h:outputText>
+                	   </p:column>
+		                
+		            </p:dataTable>
+	</p:panel>
+
+</h:body>
+</html>
